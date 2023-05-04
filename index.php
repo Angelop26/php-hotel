@@ -40,6 +40,9 @@ $hotels = [
 
 ];
 
+if (isset($_GET["filter"])) {
+    $filter = $_GET["filter"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +59,19 @@ $hotels = [
 
 <body>
     <div class="container">
+
+        <form action="index.php" method="GET">
+            <label for="parking"> filtra </label>
+            <select name="filter" id="parking">
+                <option value=""></option>
+                <option value="parking">with parking</option>
+            </select>
+            <button type="submit">invia</button>
+        </form>
+
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">name</th>
                     <th scope="col">description</th>
                     <th scope="col">parking</th>
@@ -68,12 +80,16 @@ $hotels = [
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($hotels as $key => $hotel_array) { ?>
+                <?php foreach ($hotels as $hotel_array) { ?>
                     <tr>
-                        <th scope="row"><?php echo $key; ?> </th>
-    
+
                         <? foreach ($hotel_array as $value) { ?>
-                            <td> <?php echo $value; ?> </td>
+                            <?php if ($filter === 'parking' && $hotel_array['parking'] === true) {?>
+                                <td> <?php echo $value; ?> </td>
+                            <?php } elseif ($filter === '') {?>
+                                <td> <?php echo $value; ?> </td>
+                            <?php } ?>
+  
                         <?php } ?>
     
                     </tr>
