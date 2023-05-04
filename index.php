@@ -40,8 +40,10 @@ $hotels = [
 
 ];
 
-if (isset($_GET["filter"])) {
+if (isset($_GET["filter"]) && isset($_GET["vote"])) {
     $filter = $_GET["filter"];
+    $vote = $_GET["vote"];
+    var_dump($vote);
 }
 ?>
 
@@ -66,6 +68,8 @@ if (isset($_GET["filter"])) {
                 <option value=""></option>
                 <option value="parking">with parking</option>
             </select>
+            <label for="vote">da quante stelle?</label>
+            <input type="number" name="vote" id="vote">
             <button type="submit">invia</button>
         </form>
 
@@ -83,10 +87,10 @@ if (isset($_GET["filter"])) {
                 <?php foreach ($hotels as $hotel_array) { ?>
                     <tr>
 
-                        <? foreach ($hotel_array as $value) { ?>
-                            <?php if ($filter === 'parking' && $hotel_array['parking'] === true) {?>
+                        <?php foreach ($hotel_array as $value) { ?>
+                            <?php if ($filter === 'parking' && $hotel_array['parking'] === true && $hotel_array["vote"] >= $vote) {?>
                                 <td> <?php echo $value; ?> </td>
-                            <?php } elseif ($filter === '') {?>
+                            <?php } elseif ($filter === '' && $hotel_array["vote"] >= $vote) {?>
                                 <td> <?php echo $value; ?> </td>
                             <?php } ?>
   
